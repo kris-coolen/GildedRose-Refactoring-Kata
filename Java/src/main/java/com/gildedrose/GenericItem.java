@@ -17,6 +17,9 @@ public class GenericItem {
         if (item.name.equals(BackStagePasses.NAME)) {
             return new BackStagePasses(item);
         }
+        if (item.name.equals(Conjured.NAME)) {
+            return new Conjured(item);
+        }
         return new GenericItem(item);
     }
 
