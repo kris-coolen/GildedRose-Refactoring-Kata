@@ -9,13 +9,16 @@ public class GenericItem {
 
     public void updateInventory() {
         updateQuality();
-        decreaseSellInByOneIfNotSulfuras();
+        decreaseSellInByOne();
         if (isOverdue()) {
             handleOverDue();
         }
     }
 
     protected void updateQuality() {
+        if (item.name.equals(GildedRose.SULFURAS)) {
+            return;
+        }
         if (item.name.equals(GildedRose.AGED_BRIE)) {
             increaseQualityByOne();
         } else if (item.name.equals(GildedRose.BACKSTAGE_PASSES)) {
@@ -28,15 +31,12 @@ public class GenericItem {
             }
 
         } else {
-            decreaseQualityByOneIfNotSulfuras();
+            decreaseQualityByOne();
         }
     }
 
-    protected  void decreaseQualityByOneIfNotSulfuras() {
+    protected  void decreaseQualityByOne() {
         if (item.quality > 0) {
-            if (item.name.equals(GildedRose.SULFURAS)) {
-                return;
-            }
             item.quality--;
         }
     }
@@ -48,7 +48,7 @@ public class GenericItem {
         }
     }
 
-    private  void decreaseSellInByOneIfNotSulfuras() {
+    private  void decreaseSellInByOne() {
         if (item.name.equals(GildedRose.SULFURAS)) {
             return;
         }
@@ -56,12 +56,15 @@ public class GenericItem {
     }
 
     private  void handleOverDue() {
+        if (item.name.equals(GildedRose.SULFURAS)) {
+            return;
+        }
         if (item.name.equals(GildedRose.AGED_BRIE)) {
             increaseQualityByOne();
         } else if (item.name.equals(GildedRose.BACKSTAGE_PASSES)) {
             setQualityToZero();
         } else {
-            decreaseQualityByOneIfNotSulfuras();
+            decreaseQualityByOne();
         }
     }
 
