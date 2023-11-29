@@ -61,18 +61,12 @@ class GildedRose {
     }
 
     private static void handleOverDue(Item item) {
-        if (!item.name.equals(AGED_BRIE)) {
-            if (!item.name.equals(BACKSTAGE_PASSES)) {
-                if (item.quality > 0) {
-                    if (!item.name.equals(SULFURAS)) {
-                        item.quality = item.quality - 1;
-                    }
-                }
-            } else {
-                item.quality = 0;
-            }
-        } else {
+        if (item.name.equals(AGED_BRIE)) {
             increaseQualityByOne(item);
+        } else if (item.name.equals(BACKSTAGE_PASSES)) {
+            item.quality = 0;
+        } else {
+            decreaseQualityByOneIfNotSulfuras(item);
         }
     }
 
