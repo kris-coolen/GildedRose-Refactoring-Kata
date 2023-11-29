@@ -12,7 +12,7 @@ class GildedRoseTest {
     void foo() {
         Item[] items = new Item[]{new Item("foo", 0, 0)};
         GildedRose app = new GildedRose(items);
-        app.updateQuality();
+        app.updateInventory();
         assertEquals("foo", app.items[0].name);
     }
 
@@ -20,7 +20,7 @@ class GildedRoseTest {
     void givenStandardItemWithPostiveSellin_thenExpectSellinAndQualityDecreasesByOne() {
         Item someItem = new Item("some item", 3, 10);
         GildedRose app = new GildedRose(new Item[]{someItem});
-        app.updateQuality();
+        app.updateInventory();
         assertEquals(2, someItem.sellIn);
         assertEquals(9, someItem.quality);
     }
@@ -30,7 +30,7 @@ class GildedRoseTest {
     void givenStandardItemWithZeroOrNegativeSellin_thenExpectQualityDecreasesByTwo(int nonPositiveSellin) {
         Item someItem = new Item("some item", nonPositiveSellin, 10);
         GildedRose app = new GildedRose(new Item[]{someItem});
-        app.updateQuality();
+        app.updateInventory();
         assertEquals(nonPositiveSellin - 1, someItem.sellIn);
         assertEquals(8, someItem.quality);
     }
@@ -39,7 +39,7 @@ class GildedRoseTest {
     void givenStandardItemWithZeroQuality_thenExpectQualityNotChanged() {
         Item someItem = new Item("some item", 3, 0);
         GildedRose app = new GildedRose(new Item[]{someItem});
-        app.updateQuality();
+        app.updateInventory();
         assertEquals(2, someItem.sellIn);
         assertEquals(0, someItem.quality);
     }
@@ -48,7 +48,7 @@ class GildedRoseTest {
     void givenAgedBrieWithPositiveSellin_whenQualityIs50_thenExpectQualityNotIncreased() {
         Item nonExpiredBrie = new Item("Aged Brie", 3, 50);
         GildedRose app = new GildedRose(new Item[]{nonExpiredBrie});
-        app.updateQuality();
+        app.updateInventory();
         assertEquals(2, nonExpiredBrie.sellIn);
         assertEquals(50, nonExpiredBrie.quality);
     }
@@ -57,7 +57,7 @@ class GildedRoseTest {
     void givenAgedBrieWithNegativeSellin_whenQualityIs50_thenExpectQualityNotIncreased() {
         Item expiredBrie = new Item("Aged Brie", -1, 50);
         GildedRose app = new GildedRose(new Item[]{expiredBrie});
-        app.updateQuality();
+        app.updateInventory();
         assertEquals(-2, expiredBrie.sellIn);
         assertEquals(50, expiredBrie.quality);
     }
@@ -66,7 +66,7 @@ class GildedRoseTest {
     void givenAgedBrieWithPositive_whenQualityIsLessThan50_thenExpectQualityIncreasedByOne() {
         Item nonExpiredBrie = new Item("Aged Brie", 3, 20);
         GildedRose app = new GildedRose(new Item[]{nonExpiredBrie});
-        app.updateQuality();
+        app.updateInventory();
         assertEquals(2, nonExpiredBrie.sellIn);
         assertEquals(21, nonExpiredBrie.quality);
     }
@@ -75,7 +75,7 @@ class GildedRoseTest {
     void givenAgedBrieWithZeroOrNegativeSellin_whenQualityIsLessThan50_thenExpectQualityIncreasedByTwo(int nonPositiveSellin) {
         Item expiredBrie = new Item("Aged Brie", nonPositiveSellin, 20);
         GildedRose app = new GildedRose(new Item[]{expiredBrie});
-        app.updateQuality();
+        app.updateInventory();
         assertEquals(nonPositiveSellin-1, expiredBrie.sellIn);
         assertEquals(22, expiredBrie.quality);
     }
@@ -84,7 +84,7 @@ class GildedRoseTest {
     void givenAgedBrieWithZeroOrNegativeSEllin_whenQualityIsAlready49_thenExpectQuality50AfterUpdate(int nonPositiveSellin) {
         Item expiredBrie = new Item("Aged Brie", nonPositiveSellin, 49);
         GildedRose app = new GildedRose(new Item[]{expiredBrie});
-        app.updateQuality();
+        app.updateInventory();
         assertEquals(nonPositiveSellin-1, expiredBrie.sellIn);
         assertEquals(50, expiredBrie.quality);
     }
@@ -93,9 +93,9 @@ class GildedRoseTest {
     void givenSulfuras_thenQualityAndSellInNeverChanges() {
         Item sulfuras = new Item("Sulfuras, Hand of Ragnaros", 5, 40);
         GildedRose app = new GildedRose(new Item[]{sulfuras});
-        app.updateQuality();
-        app.updateQuality();
-        app.updateQuality();
+        app.updateInventory();
+        app.updateInventory();
+        app.updateInventory();
         assertEquals(5, sulfuras.sellIn);
         assertEquals(40, sulfuras.quality);
 
@@ -105,7 +105,7 @@ class GildedRoseTest {
     void givenBackStagePasses_whenSellinMoreThen10_thenQualityIncreasesByOne() {
         Item backStagePasses = new Item("Backstage passes to a TAFKAL80ETC concert", 11, 20);
         GildedRose app = new GildedRose(new Item[]{backStagePasses});
-        app.updateQuality();
+        app.updateInventory();
         assertEquals(21, backStagePasses.quality);
     }
 
@@ -113,7 +113,7 @@ class GildedRoseTest {
     void givenBackStagePasses_whenSellinMoreThen10AndQualityAlready50_thenQualityRemains50() {
         Item backStagePasses = new Item("Backstage passes to a TAFKAL80ETC concert", 11, 50);
         GildedRose app = new GildedRose(new Item[]{backStagePasses});
-        app.updateQuality();
+        app.updateInventory();
         assertEquals(50, backStagePasses.quality);
     }
 
@@ -122,7 +122,7 @@ class GildedRoseTest {
     void givenBackStagePasses_whenSellinisBetween10And6_thenQualityIncreasesByTwo(int sellIn) {
         Item backStagePasses = new Item("Backstage passes to a TAFKAL80ETC concert", sellIn, 20);
         GildedRose app = new GildedRose(new Item[]{backStagePasses});
-        app.updateQuality();
+        app.updateInventory();
         assertEquals(22, backStagePasses.quality);
     }
 
@@ -131,7 +131,7 @@ class GildedRoseTest {
     void givenBackStagePasses_whenSellinisBetween5and1_thenQualityIncreasesByThree(int sellIn) {
         Item backStagePasses = new Item("Backstage passes to a TAFKAL80ETC concert", sellIn, 20);
         GildedRose app = new GildedRose(new Item[]{backStagePasses});
-        app.updateQuality();
+        app.updateInventory();
         assertEquals(23, backStagePasses.quality);
     }
 
@@ -140,7 +140,7 @@ class GildedRoseTest {
     void givendBackStagePasses_whenSellinIsZeroOrNegative_thenQualityDropsToZero(int sellIn) {
         Item backStagePasses = new Item("Backstage passes to a TAFKAL80ETC concert", sellIn, 20);
         GildedRose app = new GildedRose(new Item[]{backStagePasses});
-        app.updateQuality();
+        app.updateInventory();
         assertEquals(0, backStagePasses.quality);
     }
 
