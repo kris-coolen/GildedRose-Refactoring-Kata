@@ -46,7 +46,7 @@ class GildedRoseTest {
 
     @Test
     void givenAgedBrieWithPositiveSellin_whenQualityIs50_thenExpectQualityNotIncreased() {
-        Item nonExpiredBrie = new Item(GildedRose.AGED_BRIE, 3, 50);
+        Item nonExpiredBrie = new Item(AgedBrie.NAME, 3, 50);
         GildedRose app = new GildedRose(new Item[]{nonExpiredBrie});
         app.updateInventory();
         assertEquals(2, nonExpiredBrie.sellIn);
@@ -55,7 +55,7 @@ class GildedRoseTest {
 
     @Test
     void givenAgedBrieWithNegativeSellin_whenQualityIs50_thenExpectQualityNotIncreased() {
-        Item expiredBrie = new Item(GildedRose.AGED_BRIE, -1, 50);
+        Item expiredBrie = new Item(AgedBrie.NAME, -1, 50);
         GildedRose app = new GildedRose(new Item[]{expiredBrie});
         app.updateInventory();
         assertEquals(-2, expiredBrie.sellIn);
@@ -64,7 +64,7 @@ class GildedRoseTest {
 
     @Test
     void givenAgedBrieWithPositive_whenQualityIsLessThan50_thenExpectQualityIncreasedByOne() {
-        Item nonExpiredBrie = new Item(GildedRose.AGED_BRIE, 3, 20);
+        Item nonExpiredBrie = new Item(AgedBrie.NAME, 3, 20);
         GildedRose app = new GildedRose(new Item[]{nonExpiredBrie});
         app.updateInventory();
         assertEquals(2, nonExpiredBrie.sellIn);
@@ -73,7 +73,7 @@ class GildedRoseTest {
     @ParameterizedTest
     @ValueSource(ints = {0, -5})
     void givenAgedBrieWithZeroOrNegativeSellin_whenQualityIsLessThan50_thenExpectQualityIncreasedByTwo(int nonPositiveSellin) {
-        Item expiredBrie = new Item(GildedRose.AGED_BRIE, nonPositiveSellin, 20);
+        Item expiredBrie = new Item(AgedBrie.NAME, nonPositiveSellin, 20);
         GildedRose app = new GildedRose(new Item[]{expiredBrie});
         app.updateInventory();
         assertEquals(nonPositiveSellin-1, expiredBrie.sellIn);
@@ -82,7 +82,7 @@ class GildedRoseTest {
     @ParameterizedTest
     @ValueSource(ints = {0, -5})
     void givenAgedBrieWithZeroOrNegativeSEllin_whenQualityIsAlready49_thenExpectQuality50AfterUpdate(int nonPositiveSellin) {
-        Item expiredBrie = new Item(GildedRose.AGED_BRIE, nonPositiveSellin, 49);
+        Item expiredBrie = new Item(AgedBrie.NAME, nonPositiveSellin, 49);
         GildedRose app = new GildedRose(new Item[]{expiredBrie});
         app.updateInventory();
         assertEquals(nonPositiveSellin-1, expiredBrie.sellIn);

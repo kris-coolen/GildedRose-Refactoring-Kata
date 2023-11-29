@@ -7,6 +7,13 @@ public class GenericItem {
         this.item = item;
     }
 
+    public static GenericItem create(Item item) {
+        if (item.name.equals(AgedBrie.NAME)) {
+            return new AgedBrie(item);
+        }
+        return new GenericItem(item);
+    }
+
     public void updateInventory() {
         updateQuality();
         decreaseSellInByOne();
@@ -19,9 +26,7 @@ public class GenericItem {
         if (item.name.equals(GildedRose.SULFURAS)) {
             return;
         }
-        if (item.name.equals(GildedRose.AGED_BRIE)) {
-            increaseQualityByOne();
-        } else if (item.name.equals(GildedRose.BACKSTAGE_PASSES)) {
+        if (item.name.equals(GildedRose.BACKSTAGE_PASSES)) {
             increaseQualityByOne();
             if (item.sellIn < 11) {
                 increaseQualityByOne();
@@ -29,39 +34,40 @@ public class GenericItem {
             if (item.sellIn < 6) {
                 increaseQualityByOne();
             }
-
         } else {
             decreaseQualityByOne();
         }
     }
 
-    protected  void decreaseQualityByOne() {
+    protected void decreaseQualityByOne() {
         if (item.quality > 0) {
             item.quality--;
         }
     }
 
-    private  void increaseQualityByOne() {
-        if (item.quality < 50) {
-            item.quality++;
-
-        }
-    }
-
-    private  void decreaseSellInByOne() {
+    protected void decreaseSellInByOne() {
         if (item.name.equals(GildedRose.SULFURAS)) {
             return;
         }
         item.sellIn--;
     }
 
-    private  void handleOverDue() {
+    private boolean isOverdue() {
+        return item.sellIn < 0;
+    }
+
+    protected void increaseQualityByOne() {
+        if (item.quality < 50) {
+            item.quality++;
+
+        }
+    }
+
+    protected void handleOverDue() {
         if (item.name.equals(GildedRose.SULFURAS)) {
             return;
         }
-        if (item.name.equals(GildedRose.AGED_BRIE)) {
-            increaseQualityByOne();
-        } else if (item.name.equals(GildedRose.BACKSTAGE_PASSES)) {
+        if (item.name.equals(GildedRose.BACKSTAGE_PASSES)) {
             setQualityToZero();
         } else {
             decreaseQualityByOne();
@@ -70,9 +76,5 @@ public class GenericItem {
 
     private void setQualityToZero() {
         item.quality = 0;
-    }
-
-    private  boolean isOverdue() {
-        return item.sellIn < 0;
     }
 }

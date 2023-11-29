@@ -2,7 +2,6 @@ package com.gildedrose;
 
 class GildedRose {
     public static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
-    public static final String AGED_BRIE = "Aged Brie";
     public static final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
     Item[] items;
 
@@ -12,7 +11,7 @@ class GildedRose {
 
     public void updateInventory() {
         for (Item item : items) {
-            GenericItem genericItem = new GenericItem(item);
+            GenericItem genericItem = GenericItem.create(item);
             genericItem.updateInventory();
         }
     }
