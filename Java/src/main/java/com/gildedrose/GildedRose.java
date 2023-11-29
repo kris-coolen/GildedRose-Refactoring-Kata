@@ -12,11 +12,15 @@ class GildedRose {
 
     public void updateInventory() {
         for (Item item : items) {
-            updateQuality(item);
-            decreaseSellInByOneIfNotSulfuras(item);
-            if (isOverdue(item)) {
-                handleOverDue(item);
-            }
+            updateInventory(item);
+        }
+    }
+
+    private static void updateInventory(Item item) {
+        updateQuality(item);
+        decreaseSellInByOneIfNotSulfuras(item);
+        if (isOverdue(item)) {
+            handleOverDue(item);
         }
     }
 
@@ -64,10 +68,14 @@ class GildedRose {
         if (item.name.equals(AGED_BRIE)) {
             increaseQualityByOne(item);
         } else if (item.name.equals(BACKSTAGE_PASSES)) {
-            item.quality = 0;
+            setQualityToZero(item);
         } else {
             decreaseQualityByOneIfNotSulfuras(item);
         }
+    }
+
+    private static void setQualityToZero(Item item) {
+        item.quality = 0;
     }
 
     private static boolean isOverdue(Item item) {
