@@ -12,47 +12,52 @@ class GildedRose {
 
     public void updateInventory() {
         for (Item item : items) {
-            updateInventory(item);
-            updateSellin(item);
+            updateQuality(item);
+            decreaseSellInByOneIfNotSulfuras(item);
             if (isOverdue(item)) {
                 handleOverDue(item);
             }
         }
     }
 
-    private static void updateInventory(Item item) {
-        if (!item.name.equals(AGED_BRIE)
-                && !item.name.equals(BACKSTAGE_PASSES)) {
-            if (item.quality > 0) {
-                if (!item.name.equals(SULFURAS)) {
-                    item.quality = item.quality - 1;
-                }
+    private static void updateQuality(Item item) {
+        if (item.name.equals(AGED_BRIE)) {
+            increaseQualityByOne(item);
+        } else if (item.name.equals(BACKSTAGE_PASSES)) {
+            increaseQualityByOne(item);
+            if (item.sellIn < 11) {
+                increaseQualityByOne(item);
             }
+            if (item.sellIn < 6) {
+                increaseQualityByOne(item);
+            }
+
         } else {
-            if (item.quality < 50) {
-                item.quality = item.quality + 1;
-
-                if (item.name.equals(BACKSTAGE_PASSES)) {
-                    if (item.sellIn < 11) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1;
-                        }
-                    }
-
-                    if (item.sellIn < 6) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1;
-                        }
-                    }
-                }
-            }
+            decreaseQualityByOneIfNotSulfuras(item);
         }
     }
 
-    private static void updateSellin(Item item) {
-        if (!item.name.equals(SULFURAS)) {
-            item.sellIn = item.sellIn - 1;
+    private static void decreaseQualityByOneIfNotSulfuras(Item item) {
+        if (item.quality > 0) {
+            if (item.name.equals(SULFURAS)) {
+                return;
+            }
+            item.quality--;
         }
+    }
+
+    private static void increaseQualityByOne(Item item) {
+        if (item.quality < 50) {
+            item.quality++;
+
+        }
+    }
+
+    private static void decreaseSellInByOneIfNotSulfuras(Item item) {
+        if (item.name.equals(SULFURAS)) {
+            return;
+        }
+        item.sellIn--;
     }
 
     private static void handleOverDue(Item item) {
@@ -67,9 +72,7 @@ class GildedRose {
                 item.quality = 0;
             }
         } else {
-            if (item.quality < 50) {
-                item.quality = item.quality + 1;
-            }
+            increaseQualityByOne(item);
         }
     }
 
