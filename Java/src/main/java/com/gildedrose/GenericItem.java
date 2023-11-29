@@ -1,7 +1,7 @@
 package com.gildedrose;
 
 public class GenericItem {
-    private final Item item;
+    protected final Item item;
 
     public GenericItem(Item item) {
         this.item = item;
@@ -11,8 +11,11 @@ public class GenericItem {
         if (item.name.equals(AgedBrie.NAME)) {
             return new AgedBrie(item);
         }
-        if(item.name.equals(GildedRose.SULFURAS)) {
+        if (item.name.equals(Sulfuras.NAME)) {
             return new Sulfuras(item);
+        }
+        if (item.name.equals(BackStagePasses.NAME)) {
+            return new BackStagePasses(item);
         }
         return new GenericItem(item);
     }
@@ -26,17 +29,7 @@ public class GenericItem {
     }
 
     protected void updateQuality() {
-        if (item.name.equals(GildedRose.BACKSTAGE_PASSES)) {
-            increaseQualityByOne();
-            if (item.sellIn < 11) {
-                increaseQualityByOne();
-            }
-            if (item.sellIn < 6) {
-                increaseQualityByOne();
-            }
-        } else {
-            decreaseQualityByOne();
-        }
+        decreaseQualityByOne();
     }
 
     protected void decreaseQualityByOne() {
@@ -61,14 +54,10 @@ public class GenericItem {
     }
 
     protected void handleOverDue() {
-        if (item.name.equals(GildedRose.BACKSTAGE_PASSES)) {
-            setQualityToZero();
-        } else {
-            decreaseQualityByOne();
-        }
+        decreaseQualityByOne();
     }
 
-    private void setQualityToZero() {
+    protected void setQualityToZero() {
         item.quality = 0;
     }
 }
