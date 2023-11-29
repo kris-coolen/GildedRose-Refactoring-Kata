@@ -11,6 +11,9 @@ public class GenericItem {
         if (item.name.equals(AgedBrie.NAME)) {
             return new AgedBrie(item);
         }
+        if(item.name.equals(GildedRose.SULFURAS)) {
+            return new Sulfuras(item);
+        }
         return new GenericItem(item);
     }
 
@@ -23,9 +26,6 @@ public class GenericItem {
     }
 
     protected void updateQuality() {
-        if (item.name.equals(GildedRose.SULFURAS)) {
-            return;
-        }
         if (item.name.equals(GildedRose.BACKSTAGE_PASSES)) {
             increaseQualityByOne();
             if (item.sellIn < 11) {
@@ -46,9 +46,6 @@ public class GenericItem {
     }
 
     protected void decreaseSellInByOne() {
-        if (item.name.equals(GildedRose.SULFURAS)) {
-            return;
-        }
         item.sellIn--;
     }
 
@@ -64,9 +61,6 @@ public class GenericItem {
     }
 
     protected void handleOverDue() {
-        if (item.name.equals(GildedRose.SULFURAS)) {
-            return;
-        }
         if (item.name.equals(GildedRose.BACKSTAGE_PASSES)) {
             setQualityToZero();
         } else {
